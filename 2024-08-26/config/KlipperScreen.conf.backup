@@ -1,0 +1,50 @@
+[menu __print]
+name: {{ gettext('Print Control') }}
+
+[menu __print temperature]
+name: {{ gettext('Temperature') }}
+icon: heat-up
+panel: temperature
+enable: {{ (printer.temperature_devices.count > 0) or (printer.extruders.count > 0)}}
+
+[menu __main __control __bentoonoff]
+type: command
+name: Bento {'ON' if printer['fan_generic Bento'].speed > 0 else 'OFF'}
+enable: {{'fan_generic Bento' in printer}}
+gcode:
+    TOGGLE_BENTO
+
+[menu __main __control __bentospeed]
+type: input
+enable: {{'fan_generic Bento' in printer}}
+name: Filter %: {'%3d' % (menu.input*100)}%
+input: {printer["fan_generic Bento"].speed}
+input_min: 0
+input_max: 1
+input_step: 0.1
+gcode:
+    SET_FAN_SPEED FAN=Bento SPEED={menu.input}
+
+[menu __main __control __the_filteronoff]
+type: command
+name: The_Filter {'ON' if printer['fan_generic The_Filter'].speed > 0 else 'OFF'}
+enable: {{'fan_generic The_Filter' in printer}}
+gcode:
+    TOGGLE_THEFILTER
+
+[menu __main __control __thefilterspeed]
+type: input
+enable: {{'fan_generic The_Filter' in printer}}
+name: Filter %: {'%3d' % (menu.input*100)}%
+input: {printer["fan_generic The_Filter"].speed}
+input_min: 0
+input_max: 1
+input_step: 0.1
+gcode:
+    SET_FAN_SPEED FAN=The_Filter SPEED={menu.input}
+
+#~# --- Do not edit below this line. This section is auto generated --- #~#
+#~#
+#~# [graph Printer]
+#~# heater_bed = False
+#~#

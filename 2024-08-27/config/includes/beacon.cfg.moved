@@ -1,0 +1,55 @@
+??? from here until ???END lines may have been inserted/deleted
+[beacon]
+serial: /dev/serial/by-id/usb-Beacon_Beacon_RevH_140893415154354D38202020FF0A3235-if00
+
+speed: 5
+#   Z probing dive speed.
+lift_speed: 5
+#   Z probing lift speed.
+
+x_offset: -20 # update with offset from nozzle on your machine
+y_offset: 0 # update with offset from nozzle on your machine
+
+mesh_main_direction: x
+mesh_runs: 2
+
+trigger_distance: 2
+#   Beacon trigger distance for homing.
+trigger_dive_threshold: 1
+#   Threshold for range vs dive mode probing. Beyond `trigger_distance +
+#   trigger_dive_threshold` a dive will be used.
+trigger_hysteresis: 0.006
+#   Hysteresis on trigger threshold for untriggering, as a percentage of the
+#   trigger threshold.
+z_settling_time: 5
+#   Delay (in ms) for the Z axis to settle before taking proximity measurements.
+
+
+default_probe_method: contact
+# Sets the default probing method for mesh, tilt, qgl, probe, etc.
+contact_max_hotend_temperature: 180 # increase to enable hot contacting
+# Temperature limit for the hotend when contacting, override this for temps which may damage some surfaces.
+#contact_sensitivity: 1
+# Adjusts noise tolerance of contact processing. Values 0-3 are valid, with 3 tolerating the most noise.
+#contact_latency_min: 0
+# Limits how low of a latency contact is allowed to advance.
+
+# new additions for beacon safe_z_home functionality
+home_xy_position: 150.0, 150.0
+# X, Y coordinate for homing z via contact.
+home_z_hop: 10
+# Distance to retract before x/y homing moves.
+home_z_hop_speed: 30
+# Retraction speed for z hop.
+home_xy_move_speed: 300
+# Speed for moving to home_xy_position.
+home_y_before_x: False
+# If set, the Y axis will home first when using the beacon safe_z_home
+# new additions for setting default homing mode
+home_method: contact
+# Sets default homing method used by G28. `proximity` requires a valid beacon model to be loaded.
+home_method_when_homed: contact # defaults to `home_method` value
+# Sets the homing method when the machine is already in a homed state.
+home_autocalibrate: never
+# Sets the autocalibration behavior. `always` will autocal on every home, `unhomed` on initial homing,
+# `never` will never so that models stored in config may be used with proximity homing.
