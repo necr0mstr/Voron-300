@@ -1,0 +1,18 @@
+[gcode_macro END_PRINT]
+gcode:
+    SET_DISPLAY_TEXT MSG="Print successful"
+    	G91 							                    # Relative positioning
+    	G92 E0							                    # Reset Extruder
+    	G1 Z30 F6000 E-5.00  			                    # Extrude a bit
+    	G90 							                    # Absolute positioning
+    	G1 X280 Y300 F10000 			                    # Present print
+    	G1 Z30 F6000 E3.00
+        M140 S0 						                    # Turn-off bed
+    	M104 S0 						                    # Turn-off hotend
+
+
+    SET_DISPLAY_TEXT MSG="Wiping Poop"
+	STATUS_WIPING
+        WIPE_NOZZLE						                    # Wiping nozzle
+       	UPDATE_DELAYED_GCODE ID=filter_off DURATION=300		# 3 minutes
+    	M84 						                    # Disable all steppers but Z
